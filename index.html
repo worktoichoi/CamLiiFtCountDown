@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🕵️‍♂️ Hồ Sơ 21 Ngày Thực Tập Của Bé 🕵️‍♀️</title>
+<title>🕵️‍♂️ Hồ Sơ 21 Ngày Thực Tập Của Bé</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -23,10 +23,14 @@ body{
 
 /* Glass Card */
 .glass{
-  background:rgba(255,255,255,0.75);
-  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(16px);
   border:1px solid rgba(59,130,246,.35);
-  box-shadow:0 12px 30px rgba(59,130,246,.25);
+  box-shadow:0 15px 35px rgba(59,130,246,.28);
+  transition:.4s;
+}
+.glass:hover{
+  box-shadow:0 25px 50px rgba(59,130,246,.4);
 }
 
 /* Confidential label */
@@ -36,7 +40,7 @@ body{
   right:18px;
   border:2px solid #dc2626;
   color:#dc2626;
-  padding:4px 14px;
+  padding:4px 16px;
   font-weight:700;
   letter-spacing:2px;
   font-size:13px;
@@ -59,6 +63,51 @@ body{
   50%{transform:rotate(-1deg)}
   75%{transform:rotate(1deg)}
   100%{transform:rotate(0)}
+}
+
+/* Secure Title */
+.secure-title{
+  font-weight:700;
+  background:linear-gradient(90deg,#2563eb,#38bdf8,#2563eb);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 6s linear infinite;
+}
+@keyframes shine{
+  to{background-position:200% center}
+}
+
+/* Meta text */
+.meta-text{
+  color:#334155;
+  text-shadow:0 2px 6px rgba(59,130,246,.15);
+}
+
+/* Section */
+.section-title{
+  font-weight:700;
+  color:#1e40af;
+  position:relative;
+  padding-left:12px;
+  margin-top:14px;
+}
+.section-title::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:4px;
+  width:4px;
+  height:70%;
+  background:linear-gradient(to bottom,#3b82f6,#93c5fd);
+  border-radius:4px;
+}
+
+/* PDF line */
+.pdf-line{
+  height:1px;
+  background:linear-gradient(to right,transparent,#60a5fa,transparent);
+  margin:26px 0;
 }
 
 /* Typing cursor */
@@ -91,6 +140,7 @@ body{
   font-family:'Pacifico',cursive;
   font-size:18px;
   opacity:0;
+  text-shadow:0 0 8px rgba(59,130,246,.35);
   animation:sign 3s ease forwards;
   animation-delay:2s;
 }
@@ -100,18 +150,21 @@ body{
 }
 
 /* Music Button */
-#musicBtn{
+.music-btn{
   position:fixed;
-  bottom:18px;
-  left:18px;
-  background:#fff;
-  border:1px solid #93c5fd;
-  box-shadow:0 8px 20px rgba(59,130,246,.3);
-  border-radius:999px;
+  bottom:20px;
+  left:20px;
+  background:#2563eb;
+  color:#fff;
   padding:10px 14px;
+  border-radius:999px;
+  font-size:14px;
+  box-shadow:0 10px 25px rgba(37,99,235,.45);
   cursor:pointer;
-  font-size:18px;
   z-index:40;
+}
+.music-btn:hover{
+  background:#1d4ed8;
 }
 </style>
 </head>
@@ -128,51 +181,51 @@ File Secured • Level 021
 
 <!-- Countdown -->
 <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 fade">
-  <div class="glass rounded-2xl px-6 py-4">
-    <div id="days" class="text-2xl font-bold text-blue-600">0</div>
-    <div class="text-sm text-gray-600">Ngày</div>
-  </div>
-  <div class="glass rounded-2xl px-6 py-4">
-    <div id="hours" class="text-2xl font-bold text-blue-600">0</div>
-    <div class="text-sm text-gray-600">Giờ</div>
-  </div>
-  <div class="glass rounded-2xl px-6 py-4">
-    <div id="minutes" class="text-2xl font-bold text-blue-600">0</div>
-    <div class="text-sm text-gray-600">Phút</div>
-  </div>
-  <div class="glass rounded-2xl px-6 py-4">
-    <div id="seconds" class="text-2xl font-bold text-blue-600">0</div>
-    <div class="text-sm text-gray-600">Giây</div>
-  </div>
+<div class="glass rounded-2xl px-6 py-4">
+<div id="days" class="text-2xl font-bold text-blue-600">0</div>
+<div class="text-sm text-gray-600">Ngày</div>
+</div>
+<div class="glass rounded-2xl px-6 py-4">
+<div id="hours" class="text-2xl font-bold text-blue-600">0</div>
+<div class="text-sm text-gray-600">Giờ</div>
+</div>
+<div class="glass rounded-2xl px-6 py-4">
+<div id="minutes" class="text-2xl font-bold text-blue-600">0</div>
+<div class="text-sm text-gray-600">Phút</div>
+</div>
+<div class="glass rounded-2xl px-6 py-4">
+<div id="seconds" class="text-2xl font-bold text-blue-600">0</div>
+<div class="text-sm text-gray-600">Giây</div>
+</div>
 </div>
 
 <!-- Report -->
 <div class="relative mt-10 max-w-xl w-full glass rounded-3xl p-8 fade">
-  <div class="confidential" onclick="toggleEnding()">CONFIDENTIAL</div>
+<div class="confidential" onclick="toggleEnding()">CONFIDENTIAL</div>
 
-  <p id="typingText" class="typing text-gray-700 leading-relaxed text-lg"></p>
+<p id="typingText" class="typing text-gray-700 leading-relaxed text-lg"></p>
 
-  <hr class="my-6 border-dashed border-blue-300">
+<div class="pdf-line"></div>
 
-  <div class="text-right text-gray-500 signature">
-    Wook – Tình Yêu To Bự Của Bé ♥
-  </div>
+<div class="text-right text-gray-500 signature">
+Wook – Tình Yêu To Bự Của Bé ♥
+</div>
 </div>
 
 <!-- Ending -->
 <div id="ending" onclick="toggleEnding()">
-  <div class="text-center text-white">
-    <p class="text-2xl mb-3">🎬 Ending Scene</p>
-    <p class="text-xl text-pink-300">
-      “Điện Thoại, Biển Cả Và Tôi ♥”
-    </p>
-    <p class="mt-4 text-sm opacity-70">(Click Để Quay Lại Hồ Sơ)</p>
-  </div>
+<div class="text-center text-white">
+<p class="text-2xl mb-3">🎬 Ending Scene</p>
+<p class="text-xl text-pink-300">
+“Điện Thoại, Biển Cả Và Tôi ♥”
+</p>
+<p class="mt-4 text-sm opacity-70">(Click Để Quay Lại Hồ Sơ)</p>
+</div>
 </div>
 
 <!-- Music -->
+<div class="music-btn" onclick="toggleMusic()">🎵 Nhạc</div>
 <audio id="bgm" src="conan.mp3" loop></audio>
-<div id="musicBtn">🔇</div>
 
 <script>
 /* Countdown REAL TIME */
@@ -191,11 +244,12 @@ updateCountdown();
 setInterval(updateCountdown,1000);
 
 /* Typing */
-const text=`📂 Báo Cáo Mật
+const text=`📁 BÁO CÁO MẬT
 
-Đối Tượng: Bé Yêu 💙
-Tuổi: 21
-Nhiệm Vụ: Cô Giáo Mầm Non Đáng Yêu
+Đối Tượng: 
+– Bé Yêu 💙
+– Tuổi: 21
+– Nhiệm Vụ: Cô Giáo Mầm Non Đáng Yêu
 
 Nhận Định:
 – Dịu Dàng Và Tận Tâm
@@ -203,59 +257,47 @@ Nhận Định:
 – Luôn Cố Gắng, Dù Có Mệt
 
 Kết Luận:
-Thời Gian Sẽ Trôi Rất Nhanh.
-Chỉ Cần Bé Vững Bước,
-Mọi Yêu Thương Vẫn Luôn Ở Đây.`;
+– Thời Gian Sẽ Trôi Rất Nhanh.
+– Chỉ Cần Bé Vững Bước,
+– Mọi Yêu Thương Vẫn Luôn Ở Đây.`;
 
 let i=0;
 (function type(){
   if(i<text.length){
-    typingText.innerHTML += text[i]==='\n' ? '<br>' : text[i];
+    typingText.innerHTML+=text[i]==='\n'?'<br>':text[i];
     i++;
     setTimeout(type,35);
   }
 })();
 
-/* Music control */
-const bgm = document.getElementById('bgm');
-const btn = document.getElementById('musicBtn');
-let playing = false;
+/* Music Control */
+const bgm=document.getElementById('bgm');
+let musicOn=false;
 
-function playMusic(){
-  if(playing) return;
-  bgm.volume = 0;
-  bgm.play();
-  let v = 0;
-  const fade = setInterval(()=>{
-    if(v >= 1) clearInterval(fade);
-    bgm.volume = v += 0.05;
-  },80);
-  playing = true;
-  btn.textContent = '🔊';
+function toggleMusic(){
+  if(!musicOn){
+    bgm.volume=0;
+    bgm.play();
+    let v=0;
+    const fadeIn=setInterval(()=>{
+      if(v>=1) clearInterval(fadeIn);
+      bgm.volume=v+=0.05;
+    },80);
+    musicOn=true;
+  }else{
+    let v=bgm.volume;
+    const fadeOut=setInterval(()=>{
+      if(v<=0){
+        bgm.pause();
+        clearInterval(fadeOut);
+      }
+      bgm.volume=v-=0.05;
+    },80);
+    musicOn=false;
+  }
 }
 
-function stopMusic(){
-  let v = bgm.volume;
-  const fade = setInterval(()=>{
-    if(v <= 0){
-      bgm.pause();
-      clearInterval(fade);
-    }
-    bgm.volume = v -= 0.05;
-  },80);
-  playing = false;
-  btn.textContent = '🔇';
-}
-
-btn.onclick = e=>{
-  e.stopPropagation();
-  playing ? stopMusic() : playMusic();
-};
-
-/* Auto play on first interaction */
-document.body.addEventListener('click', playMusic, { once:true });
-
-/* Ending toggle */
+/* Ending */
 function toggleEnding(){
   document.getElementById('ending').classList.toggle('active');
 }
