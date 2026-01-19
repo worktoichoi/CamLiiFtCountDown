@@ -10,6 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  /* ===== WAVE CONTROL ===== */
+  --wave-speed: 6s;        /* 🔁 chậm / nhanh */
+  --wave-height: 22px;     /* 🌊 cao / thấp */
+  --wave-opacity: .55;     /* 🎨 đậm / nhạt */
+}
+
 body{
   font-family:'ZCOOL XiaoWei','Quicksand',serif;
 }
@@ -21,7 +28,7 @@ body{
   to{opacity:1;transform:translateY(0)}
 }
 
-/* Glass Card */
+/* Glass */
 .glass{
   background:rgba(255,255,255,.78);
   backdrop-filter:blur(18px);
@@ -54,64 +61,25 @@ body{
 .confidential::after{
   content:'';
   position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
+  inset:0;
   background:linear-gradient(120deg,transparent,rgba(220,38,38,.6),transparent);
-  animation:scan 2.5s infinite;
+  animation:scan 2.6s infinite;
 }
-@keyframes scan{
-  100%{left:100%}
-}
-.confidential:hover{
-  animation:shake .25s infinite;
-  opacity:1;
-}
-@keyframes blink{
-  0%,100%{opacity:.6}
-  50%{opacity:1}
-}
-@keyframes shake{
-  0%{transform:rotate(0)}
-  25%{transform:rotate(1deg)}
-  50%{transform:rotate(-1deg)}
-  75%{transform:rotate(1deg)}
-  100%{transform:rotate(0)}
-}
-
-/* Section Highlight */
-.section{
-  font-weight:700;
-  background:linear-gradient(90deg,#2563eb,#38bdf8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  display:inline-block;
-  position:relative;
-}
-.section::after{
-  content:'';
-  position:absolute;
-  left:0;
-  bottom:-4px;
-  width:100%;
-  height:2px;
-  background:linear-gradient(to right,#60a5fa,transparent);
-}
-
-/* Text Glow */
-.glow-text{
-  text-shadow:0 0 8px rgba(59,130,246,.25);
-}
+@keyframes scan{100%{transform:translateX(200%)}}
+@keyframes blink{0%,100%{opacity:.6}50%{opacity:1}}
 
 /* Typing */
 .typing::after{
   content:'_';
   animation:cursor 1s infinite;
 }
-@keyframes cursor{
-  0%,100%{opacity:1}
-  50%{opacity:0}
+@keyframes cursor{50%{opacity:0}}
+
+/* Glow Text */
+.glow-text{
+  text-shadow:
+    0 0 6px rgba(59,130,246,.25),
+    0 0 14px rgba(59,130,246,.15);
 }
 
 /* PDF Line */
@@ -121,24 +89,32 @@ body{
   margin:26px 0;
 }
 
-/* Ending Scene */
+/* ===== ENDING ===== */
 #ending{
   position:fixed;
   inset:0;
-  background:rgba(2,6,23,.92);
-  backdrop-filter:blur(8px);
+  background:#020617;
   display:none;
   align-items:center;
   justify-content:center;
   z-index:50;
+  overflow:hidden;
 }
-#ending.active{
-  display:flex;
-  animation:endingZoom 1s ease forwards;
+#ending.active{display:flex}
+
+/* 🌊 WAVES */
+#waves{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 120%, #0ea5e9 0%, transparent 60%),
+    linear-gradient(#020617,#020617);
+  animation:wave var(--wave-speed) ease-in-out infinite;
+  opacity:var(--wave-opacity);
 }
-@keyframes endingZoom{
-  from{opacity:0;transform:scale(.92)}
-  to{opacity:1;transform:scale(1)}
+@keyframes wave{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(calc(-1 * var(--wave-height)))}
 }
 
 /* Signature */
@@ -162,16 +138,14 @@ body{
   left:20px;
   background:#2563eb;
   color:#fff;
-  padding:10px 16px;
+  padding:10px 18px;
   border-radius:999px;
   font-size:14px;
   box-shadow:0 12px 30px rgba(37,99,235,.45);
   cursor:pointer;
   z-index:40;
 }
-.music-btn:hover{
-  background:#1d4ed8;
-}
+.music-btn:hover{background:#1d4ed8}
 </style>
 </head>
 
@@ -187,22 +161,10 @@ File Secured • Level 021
 
 <!-- Countdown -->
 <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 fade">
-<div class="glass rounded-2xl px-6 py-4">
-<div id="days" class="text-2xl font-bold text-blue-600">0</div>
-<div class="text-sm text-gray-600">Ngày</div>
-</div>
-<div class="glass rounded-2xl px-6 py-4">
-<div id="hours" class="text-2xl font-bold text-blue-600">0</div>
-<div class="text-sm text-gray-600">Giờ</div>
-</div>
-<div class="glass rounded-2xl px-6 py-4">
-<div id="minutes" class="text-2xl font-bold text-blue-600">0</div>
-<div class="text-sm text-gray-600">Phút</div>
-</div>
-<div class="glass rounded-2xl px-6 py-4">
-<div id="seconds" class="text-2xl font-bold text-blue-600">0</div>
-<div class="text-sm text-gray-600">Giây</div>
-</div>
+<div class="glass rounded-2xl px-6 py-4"><div id="days" class="text-2xl font-bold text-blue-600">0</div>Ngày</div>
+<div class="glass rounded-2xl px-6 py-4"><div id="hours" class="text-2xl font-bold text-blue-600">0</div>Giờ</div>
+<div class="glass rounded-2xl px-6 py-4"><div id="minutes" class="text-2xl font-bold text-blue-600">0</div>Phút</div>
+<div class="glass rounded-2xl px-6 py-4"><div id="seconds" class="text-2xl font-bold text-blue-600">0</div>Giây</div>
 </div>
 
 <!-- Report -->
@@ -220,33 +182,28 @@ Wook – Tình Yêu To Bự Của Bé ♥
 
 <!-- Ending -->
 <div id="ending" onclick="toggleEnding()">
-<div class="text-center text-white">
-<p class="text-2xl mb-3">🎬 Ending Scene</p>
-<p class="text-xl text-pink-300">
-“Điện Thoại, Biển Cả Và Tôi ♥”
-</p>
-<p class="mt-4 text-sm opacity-70">(Click Để Quay Lại Hồ Sơ)</p>
-</div>
+  <div id="waves"></div>
+  <div class="relative z-10 text-center text-white">
+    <p class="text-2xl mb-3">🎬 Ending Scene</p>
+    <p class="text-xl text-pink-300">“Điện Thoại, Biển Cả Và Tôi ♥”</p>
+    <p class="mt-4 text-sm opacity-70">(Click Để Quay Lại Hồ Sơ)</p>
+  </div>
 </div>
 
-<div class="music-btn" onclick="toggleMusic()">🎵 Nhạc</div>
+<div id="musicBtn" class="music-btn" onclick="toggleMusic()">⏸ Dừng Nhạc</div>
 <audio id="bgm" src="conan.mp3" loop></audio>
 
 <script>
-/* Countdown REAL TIME */
+/* Countdown */
 const START=new Date(2026,0,19,0,0,0).getTime();
 const END=START+21*24*60*60*1000;
-
-function updateCountdown(){
-  let diff=END-Date.now();
-  if(diff<0) diff=0;
-  days.innerText=Math.floor(diff/86400000);
-  hours.innerText=Math.floor(diff/3600000)%24;
-  minutes.innerText=Math.floor(diff/60000)%60;
-  seconds.innerText=Math.floor(diff/1000)%60;
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
+setInterval(()=>{
+  let d=END-Date.now(); if(d<0)d=0;
+  days.innerText=Math.floor(d/86400000);
+  hours.innerText=Math.floor(d/3600000)%24;
+  minutes.innerText=Math.floor(d/60000)%60;
+  seconds.innerText=Math.floor(d/1000)%60;
+},1000);
 
 /* Typing */
 const text=`📁 BÁO CÁO MẬT
@@ -265,38 +222,35 @@ Kết Luận:
 – Thời Gian Sẽ Trôi Rất Nhanh.
 – Chỉ Cần Bé Vững Bước,
 – Mọi Yêu Thương Vẫn Luôn Ở Đây.`;
-
 let i=0;
 (function type(){
   if(i<text.length){
     typingText.innerHTML+=text[i]==='\n'?'<br>':text[i];
-    i++;
-    setTimeout(type,35);
+    i++;setTimeout(type,35);
   }
 })();
 
-/* Music */
+/* MUSIC AUTO PLAY */
 const bgm=document.getElementById('bgm');
-let musicOn=false;
+const btn=document.getElementById('musicBtn');
+let musicOn=true;
+
+window.addEventListener('load',()=>{
+  bgm.volume=0;
+  bgm.play().then(()=>{
+    let v=0;
+    const fi=setInterval(()=>{if(v>=1)clearInterval(fi);bgm.volume=v+=.05},80);
+  }).catch(()=>{btn.innerText='▶ Mở Nhạc'; musicOn=false});
+});
+
 function toggleMusic(){
   if(!musicOn){
-    bgm.volume=0;
     bgm.play();
-    let v=0;
-    const fadeIn=setInterval(()=>{
-      if(v>=1) clearInterval(fadeIn);
-      bgm.volume=v+=0.05;
-    },80);
+    btn.innerText='⏸ Dừng Nhạc';
     musicOn=true;
   }else{
-    let v=bgm.volume;
-    const fadeOut=setInterval(()=>{
-      if(v<=0){
-        bgm.pause();
-        clearInterval(fadeOut);
-      }
-      bgm.volume=v-=0.05;
-    },80);
+    bgm.pause();
+    btn.innerText='▶ Mở Nhạc';
     musicOn=false;
   }
 }
