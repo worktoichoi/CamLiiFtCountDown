@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕵️‍♂️ Hồ Sơ 21 Ngày Thực Tập Của Bé 🕵️‍♀️</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'ZCOOL XiaoWei','Quicksand',serif;
+}
+
+/* Fade */
+.fade{animation:fadeIn 1.2s ease forwards}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Glass Card */
+.glass{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(59,130,246,.35);
+  box-shadow:0 12px 30px rgba(59,130,246,.25);
+}
+
+/* Confidential label */
+.confidential{
+  position:absolute;
+  top:-14px;
+  right:18px;
+  border:2px solid #dc2626;
+  color:#dc2626;
+  padding:4px 14px;
+  font-weight:700;
+  letter-spacing:2px;
+  font-size:13px;
+  background:#fff;
+  opacity:.75;
+  cursor:pointer;
+  animation:blink 2s infinite;
+}
+.confidential:hover{
+  animation:shake .25s infinite;
+  opacity:1;
+}
+@keyframes blink{
+  0%,100%{opacity:.6}
+  50%{opacity:1}
+}
+@keyframes shake{
+  0%{transform:rotate(0)}
+  25%{transform:rotate(1deg)}
+  50%{transform:rotate(-1deg)}
+  75%{transform:rotate(1deg)}
+  100%{transform:rotate(0)}
+}
+
+/* Typing cursor */
+.typing::after{
+  content:'_';
+  animation:cursor 1s infinite;
+}
+@keyframes cursor{
+  0%,100%{opacity:1}
+  50%{opacity:0}
+}
+
+/* Ending Scene */
+#ending{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.92);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+#ending.active{
+  display:flex;
+  animation:fadeIn 1s ease;
+}
+
+/* Signature */
+.signature{
+  font-family:'Pacifico',cursive;
+  font-size:18px;
+  opacity:0;
+  animation:sign 3s ease forwards;
+  animation-delay:2s;
+}
+@keyframes sign{
+  from{opacity:0;transform:translateX(20px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* Music Button */
+#musicBtn{
+  position:fixed;
+  bottom:18px;
+  left:18px;
+  background:#fff;
+  border:1px solid #93c5fd;
+  box-shadow:0 8px 20px rgba(59,130,246,.3);
+  border-radius:999px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-size:18px;
+  z-index:40;
+}
+</style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-sky-100 via-blue-50 to-white flex flex-col items-center text-center px-4">
+
+<h1 class="mt-10 text-3xl md:text-4xl text-blue-600 font-bold fade">
+🕵️‍♂️ Hồ Sơ 21 Ngày Thực Tập Của Bé 🕵️‍♀️
+</h1>
+
+<p class="mt-2 text-sm text-blue-500 fade">
+File Secured • Level 021
+</p>
+
+<!-- Countdown -->
+<div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 fade">
+  <div class="glass rounded-2xl px-6 py-4">
+    <div id="days" class="text-2xl font-bold text-blue-600">0</div>
+    <div class="text-sm text-gray-600">Ngày</div>
+  </div>
+  <div class="glass rounded-2xl px-6 py-4">
+    <div id="hours" class="text-2xl font-bold text-blue-600">0</div>
+    <div class="text-sm text-gray-600">Giờ</div>
+  </div>
+  <div class="glass rounded-2xl px-6 py-4">
+    <div id="minutes" class="text-2xl font-bold text-blue-600">0</div>
+    <div class="text-sm text-gray-600">Phút</div>
+  </div>
+  <div class="glass rounded-2xl px-6 py-4">
+    <div id="seconds" class="text-2xl font-bold text-blue-600">0</div>
+    <div class="text-sm text-gray-600">Giây</div>
+  </div>
+</div>
+
+<!-- Report -->
+<div class="relative mt-10 max-w-xl w-full glass rounded-3xl p-8 fade">
+  <div class="confidential" onclick="toggleEnding()">CONFIDENTIAL</div>
+
+  <p id="typingText" class="typing text-gray-700 leading-relaxed text-lg"></p>
+
+  <hr class="my-6 border-dashed border-blue-300">
+
+  <div class="text-right text-gray-500 signature">
+    Wook – Tình Yêu To Bự Của Bé ♥
+  </div>
+</div>
+
+<!-- Ending -->
+<div id="ending" onclick="toggleEnding()">
+  <div class="text-center text-white">
+    <p class="text-2xl mb-3">🎬 Ending Scene</p>
+    <p class="text-xl text-pink-300">
+      “Điện Thoại, Biển Cả Và Tôi ♥”
+    </p>
+    <p class="mt-4 text-sm opacity-70">(Click Để Quay Lại Hồ Sơ)</p>
+  </div>
+</div>
+
+<!-- Music -->
+<audio id="bgm" src="conan.mp3" loop></audio>
+<div id="musicBtn">🔇</div>
+
+<script>
+/* Countdown REAL TIME */
+const START = new Date(2026,0,19,0,0,0).getTime();
+const END = START + 21*24*60*60*1000;
+
+function updateCountdown(){
+  let diff = END - Date.now();
+  if(diff<0) diff=0;
+  days.innerText = Math.floor(diff/86400000);
+  hours.innerText = Math.floor(diff/3600000)%24;
+  minutes.innerText = Math.floor(diff/60000)%60;
+  seconds.innerText = Math.floor(diff/1000)%60;
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+/* Typing */
+const text=`📂 Báo Cáo Mật
+
+Đối Tượng: Bé Yêu 💙
+Tuổi: 21
+Nhiệm Vụ: Cô Giáo Mầm Non Đáng Yêu
+
+Nhận Định:
+– Dịu Dàng Và Tận Tâm
+– Mang Yêu Thương Đến Từng Khoảnh Khắc
+– Luôn Cố Gắng, Dù Có Mệt
+
+Kết Luận:
+Thời Gian Sẽ Trôi Rất Nhanh.
+Chỉ Cần Bé Vững Bước,
+Mọi Yêu Thương Vẫn Luôn Ở Đây.`;
+
+let i=0;
+(function type(){
+  if(i<text.length){
+    typingText.innerHTML += text[i]==='\n' ? '<br>' : text[i];
+    i++;
+    setTimeout(type,35);
+  }
+})();
+
+/* Music control */
+const bgm = document.getElementById('bgm');
+const btn = document.getElementById('musicBtn');
+let playing = false;
+
+function playMusic(){
+  if(playing) return;
+  bgm.volume = 0;
+  bgm.play();
+  let v = 0;
+  const fade = setInterval(()=>{
+    if(v >= 1) clearInterval(fade);
+    bgm.volume = v += 0.05;
+  },80);
+  playing = true;
+  btn.textContent = '🔊';
+}
+
+function stopMusic(){
+  let v = bgm.volume;
+  const fade = setInterval(()=>{
+    if(v <= 0){
+      bgm.pause();
+      clearInterval(fade);
+    }
+    bgm.volume = v -= 0.05;
+  },80);
+  playing = false;
+  btn.textContent = '🔇';
+}
+
+btn.onclick = e=>{
+  e.stopPropagation();
+  playing ? stopMusic() : playMusic();
+};
+
+/* Auto play on first interaction */
+document.body.addEventListener('click', playMusic, { once:true });
+
+/* Ending toggle */
+function toggleEnding(){
+  document.getElementById('ending').classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
